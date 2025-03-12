@@ -14,13 +14,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app, resources={
-    r"/api/*": {
-        "origins": ["https://medimind-phi.vercel.app", "http://localhost:5000"],
-        "methods": ["POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
-    }
-})
+CORS(app, origins=["https://medimind-phi.vercel.app", "http://localhost:3000"])
 
 # Initialize components
 embeddings = download_hugging_face_embeddings()
@@ -68,6 +62,14 @@ prompt = ChatPromptTemplate.from_messages([
 # Create RAG chain
 question_answer_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+
+# Add this route near your other routes
+@app.route('/')
+def home():
+    return jsonify({
+        'status': 'ok',
+        'message': 'MediMind API is running'
+    })
 
 @app.route('/api/ask', methods=['POST'])
 def ask_question():
