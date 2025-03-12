@@ -1,11 +1,8 @@
-sentence-transformers
-langchain 
 flask
-pypdf
-python-dotenv
-pinecone[grpc]
+flask-cors
+langchain
 langchain-pinecone
-langchain_community
-langchain_google_genai
-langchain_experimental
--e .
+langchain-google-genai
+python-dotenv
+pinecone-client
+sentence-transformers
