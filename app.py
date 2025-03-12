@@ -14,7 +14,13 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["https://medimind-phi.vercel.app/", "http://localhost:3000"],
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Initialize components
 embeddings = download_hugging_face_embeddings()
@@ -80,4 +86,6 @@ def ask_question():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    # Update to use environment variables for port and host
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
