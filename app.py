@@ -16,7 +16,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={
     r"/api/*": {
-        "origins": ["https://medimind-phi.vercel.app/", "http://localhost:3000"],
+        "origins": ["https://medimind-phi.vercel.app", "http://localhost:3000"],
         "methods": ["POST", "OPTIONS"],
         "allow_headers": ["Content-Type"]
     }
