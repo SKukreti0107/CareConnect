@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from src.helper import download_hugging_face_embeddings
+#from src.helper import download_hugging_face_embeddings
+from src.helper import gemini_api_embeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.chains import create_retrieval_chain
@@ -17,7 +18,7 @@ app = Flask(__name__)
 CORS(app, origins=["https://medimind-phi.vercel.app", "http://localhost:3000"])
 
 # Initialize components
-embeddings = download_hugging_face_embeddings()
+embeddings = gemini_api_embeddings()
 index_name = "care-connect"
 
 # Load existing Pinecone index

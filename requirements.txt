@@ -5,4 +5,3 @@ langchain-pinecone
 langchain-google-genai
 python-dotenv
 pinecone-client
-sentence-transformers
