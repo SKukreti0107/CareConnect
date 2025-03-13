@@ -1,13 +1,22 @@
-from langchain.document_loaders import PyPDFLoader, DirectoryLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 #extracting data from pdf 
-def load_pdf_file(data):
-    loader= DirectoryLoader(data,glob="*.pdf",loader_cls=PyPDFLoader)
-    documents=loader.load()
-    return documents
+def load_pdf_file():
+    try:
+        print("Starting PDF loading...")
+        loader = PyPDFLoader("Data/Med_Book.pdf")
+        documents = loader.load()
+        print(f"Successfully loaded PDF with {len(documents)} pages")
+        return documents
+    except KeyboardInterrupt:
+        print("\nPDF loading interrupted by user. Please wait for cleanup...")
+        raise
+    except Exception as e:
+        print(f"Error loading PDF: {str(e)}")
+        raise
 
 #performing the chinking operation 
 def text_split(extracted_data):
@@ -20,3 +29,7 @@ def download_hugging_face_embeddings():
     embeddings=HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
     return embeddings
 
+#downloading the api key for google genai 768 vector dimension
+def gemini_api_embeddings():
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
+    return embeddings
